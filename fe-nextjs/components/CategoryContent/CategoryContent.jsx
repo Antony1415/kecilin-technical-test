@@ -7,14 +7,15 @@ const CategoryContent = () => {
 
   useEffect(() => {
     fetch('http://localhost:8080/category', { method: 'GET' }).then(res => res.json()).then(data => {
+      const mapData = []
       data.map((item) => {
         const row = {
           id: item.id,
           name: item.name,
         }
-        setRows(prev => [...prev, row])
+        mapData.push(row)
       })
-
+      setRows(mapData)
     })
   }, [])
 

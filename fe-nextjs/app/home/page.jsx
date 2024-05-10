@@ -7,7 +7,7 @@ import { CategoryContent, ProductContent, UserListContent } from '@/components';
 import { AppBar, Button, Toolbar } from '@mui/material';
 
 export default function Home() {
-    const [value, setValue] = useState('user');
+    const [value, setValue] = useState('product');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

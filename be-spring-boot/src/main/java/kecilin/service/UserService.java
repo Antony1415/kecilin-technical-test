@@ -40,8 +40,6 @@ public class UserService {
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
-        user.setPassword(request.getPassword());
-        user.setRole(request.getRole());
 
         return userRepository.save(user);
     }

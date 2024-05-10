@@ -1,12 +1,35 @@
 'use client'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Table } from '@/components';
+import { Table, UserListDeleteModal, UserListModal } from '@/components';
+import { Box, Button, InputBase, Modal } from '@mui/material';
 
 const UserListContent = () => {
   const [rows, setRows] = useState([])
+  const [open, setOpen] = useState(false);
+  const [formType, setFormType] = useState('');
+  const [selectedUser, setSelectedUser] = useState([]);
+  const handleClose = () => {
+    setOpen(false)
+    setFormType('')
+  };
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 500,
+    bgcolor: 'white',
+    border: '1px solid #000',
+    boxShadow: 24,
+    borderRadius: '5px',
+    py: 4,
+    px: 6
+  };
 
   useEffect(() => {
     fetch('http://localhost:8080/user', { method: 'GET' }).then(res => res.json()).then(data => {
+      const mapData = []
       data.map((item) => {
         const row = {
           id: item.id,
@@ -16,9 +39,9 @@ const UserListContent = () => {
           age: item.age,
           role: item.role
         }
-        setRows(prev => [...prev, row])
+        mapData.push(row)
       })
-
+      setRows(mapData)
     })
   }, [])
 
@@ -41,9 +64,40 @@ const UserListContent = () => {
 
   return (
     <div className='flex flex-col gap-5'>
-      <h1 className='font-bold text-[35px]'>User List</h1>
+      <div className='flex gap-[100px]'>
+        <h1 className='font-bold text-[35px]'>User List</h1>
 
-      <Table rows={rows} columns={columns} onEdit={(val) => { alert(`Edit ${val}`) }} onDelete={() => { alert(`Delete ${val}`) }} />
+        <div className='flex'>
+          <Button variant="contained" type='submit'>Create</Button>
+        </div>
+      </div>
+
+      <Table
+        rows={rows}
+        columns={columns}
+        onRowSelect={(ids) => {
+          setSelectedUser(rows.find((user) => user.id === ids[0]))
+        }}
+        onEdit={() => {
+          setOpen(true)
+          setFormType('edit')
+        }}
+        onDelete={() => {
+          setOpen(true)
+          setFormType('delete')
+        }}
+      />
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          {formType === 'edit' ? <UserListModal user={selectedUser} /> : <UserListDeleteModal user={selectedUser} />}
+        </Box>
+      </Modal>
     </div>
   )
 }
