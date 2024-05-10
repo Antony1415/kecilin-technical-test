@@ -1,8 +1,10 @@
 'use client'
 import { Button, TextField } from '@mui/material'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 const LoginForm = ({ setFormType }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -18,7 +20,26 @@ const LoginForm = ({ setFormType }) => {
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    console.log("AKAKA", formData);
+    fetch('http://localhost:8080/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        const userData = {
+          role: data.role,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          password: data.password,
+          email: data.email
+        }
+        document.cookie = `user=${JSON.stringify(userData)}`
+        router.push("/home")
+      })
+      .catch()
   }
 
   return (

@@ -1,1 +1,1 @@
-export {default as UserListModal} from './UserListUpdateModal'
+export {default as UserListUpdateModal} from './UserListUpdateModal'

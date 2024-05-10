@@ -2,11 +2,15 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from '@/components';
 
-const CategoryContent = () => {
+const CategoryContent = ({ user }) => {
   const [rows, setRows] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:8080/category', { method: 'GET' }).then(res => res.json()).then(data => {
+    fetch('http://localhost:8080/category', {
+      method: 'GET', headers: {
+        'Authorization': 'Basic ' + btoa(`${user.email}:${user.password}`)
+      }
+    }).then(res => res.json()).then(data => {
       const mapData = []
       data.map((item) => {
         const row = {

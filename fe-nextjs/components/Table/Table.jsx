@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+''
+import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
-const Table = ({ rows, columns, onRowSelect, onEdit, onDelete, hideFooter = false }) => {
+const Table = ({ rows, columns, onRowSelect, onEdit, onDelete, hideFooter = false, customPaginate = false }) => {
     const actionsColumn = () => {
         return (
             <div className='flex gap-5 items-center justify-center w-full h-full'>
@@ -18,20 +19,32 @@ const Table = ({ rows, columns, onRowSelect, onEdit, onDelete, hideFooter = fals
 
     return (
         <div style={{ height: 'fit-content', width: 'fit-content' }}>
-            <DataGrid
-                rows={rows}
-                columns={mapColumn}
-                // initialState={{
-                //     pagination: {
-                //         paginationModel: { page: 0, pageSize: 5 },
-                //     },
-                // }}
-                // pageSizeOptions={[5, 10]}
-                checkboxSelection
-                onRowSelectionModelChange={onRowSelect}
-                disableRowSelectionOnClick
-                hideFooter={hideFooter}
-            />
+            {customPaginate ? (
+                <DataGrid
+                    rows={rows}
+                    columns={mapColumn}
+                    checkboxSelection
+                    onRowSelectionModelChange={onRowSelect}
+                    disableRowSelectionOnClick
+                    hideFooter={hideFooter}
+                />
+            )
+                : (
+                    <DataGrid
+                        rows={rows}
+                        columns={mapColumn}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { page: 0, pageSize: 5 },
+                            },
+                        }}
+                        pageSizeOptions={[5, 10]}
+                        checkboxSelection
+                        onRowSelectionModelChange={onRowSelect}
+                        disableRowSelectionOnClick
+                        hideFooter={hideFooter}
+                    />
+                )}
         </div>
     )
 }

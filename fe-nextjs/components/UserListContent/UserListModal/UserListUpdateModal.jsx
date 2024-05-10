@@ -1,7 +1,8 @@
+'use client'
 import { Button, InputBase } from '@mui/material'
 import React, { useState } from 'react'
 
-const UserListModal = ({ user }) => {
+const UserListUpdateModal = ({ user }) => {
   const [formData, setFormData] = useState({
     first_name: user.firstName,
     last_name: user.lastName,
@@ -84,4 +85,4 @@ const UserListModal = ({ user }) => {
   )
 }
 
-export default UserListModal
+export default UserListUpdateModal

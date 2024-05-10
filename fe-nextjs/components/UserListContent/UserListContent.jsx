@@ -1,9 +1,9 @@
 'use client'
-import React, { useEffect, useMemo, useState } from 'react'
-import { Table, UserListDeleteModal, UserListModal } from '@/components';
-import { Box, Button, InputBase, Modal } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { Table, UserListDeleteModal } from '@/components';
+import { Box, Button, Modal } from '@mui/material';
 
-const UserListContent = () => {
+const UserListContent = ({ user }) => {
   const [rows, setRows] = useState([])
   const [open, setOpen] = useState(false);
   const [formType, setFormType] = useState('');
@@ -28,7 +28,12 @@ const UserListContent = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:8080/user', { method: 'GET' }).then(res => res.json()).then(data => {
+    fetch('http://localhost:8080/user', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ' + btoa(`${user.email}:${user.password}`)
+      }
+    }).then(res => res.json()).then(data => {
       const mapData = []
       data.map((item) => {
         const row = {
@@ -95,7 +100,7 @@ const UserListContent = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {formType === 'edit' ? <UserListModal user={selectedUser} /> : <UserListDeleteModal user={selectedUser} />}
+          {formType === 'edit' ? <UserListUpdateModal user={selectedUser} /> : <UserListDeleteModal user={selectedUser} />}
         </Box>
       </Modal>
     </div>

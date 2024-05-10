@@ -1,3 +1,4 @@
+'use client'
 import { Button, InputBase } from '@mui/material'
 import React, { useState } from 'react'
 

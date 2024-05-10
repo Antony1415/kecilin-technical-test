@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -18,22 +20,31 @@ public class KecilinApplication {
 		SpringApplication.run(KecilinApplication.class, args);
 	}
 
-	@Configuration
-	// @Profile(PROFILE_DEV)
-	public class CorsConfiguration {
-
-		@Bean
-		public WebMvcConfigurer corsConfigurer() {
-			return new WebMvcConfigurer() {
-				@Override
-				public void addCorsMappings(CorsRegistry registry) {
-					registry.addMapping("/**")
-							.allowedOrigins("*")
-							.allowedHeaders("*")
-							.allowedMethods("*");
-				}
-			};
-		}
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
+
+	@Bean
+	public NoOpPasswordEncoder noOpPasswordEncoder() {
+		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+	}
+
+	// @Configuration
+	// public class CorsConfiguration {
+
+	// @Bean
+	// public WebMvcConfigurer corsConfigurer() {
+	// return new WebMvcConfigurer() {
+	// @Override
+	// public void addCorsMappings(CorsRegistry registry) {
+	// registry.addMapping("/**")
+	// .allowedOrigins("*")
+	// .allowedHeaders("*")
+	// .allowedMethods("*");
+	// }
+	// };
+	// }
+	// }
 
 }

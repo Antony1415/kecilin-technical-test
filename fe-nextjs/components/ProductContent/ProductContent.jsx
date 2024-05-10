@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ProductDeleteModal, Table, ProductModal } from '@/components';
 import { Box, Button, MenuItem, Modal, Pagination, Select, TextField } from '@mui/material';
 
-const ProductContent = () => {
+const ProductContent = ({ user }) => {
   const [rows, setRows] = useState([])
   const [open, setOpen] = useState(false);
   const [formType, setFormType] = useState('');
@@ -30,13 +30,21 @@ const ProductContent = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8080/category`, { method: 'GET' }).then(res => res.json()).then(data => {
-      const mapData = []
-      data.map((item) => {
-        mapData.push(item.name)
-      })
-      setCategoryDropdown(mapData)
+    console.log(`NOT BTOA: ${user.email}:${user.password}`);
+    console.log(`WITH BTOA: ${btoa(`${user.email}:${user.password}`)}`);
+    fetch(`http://localhost:8080/category`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ' + btoa(`${user.email}:${user.password}`)
+      }
     })
+      .then(res => res.json()).then(data => {
+        const mapData = []
+        data.map((item) => {
+          mapData.push(item.name)
+        })
+        setCategoryDropdown(mapData)
+      })
   }, [])
 
   useEffect(() => {
@@ -45,9 +53,13 @@ const ProductContent = () => {
       `${filterByCategory && `&category=${filterByCategory}`}` +
       `${sortBy && `&sort=${sortBy}`}` +
       `${searchByName && `&name=${searchByName}`}`
-    console.log("REQ: ", reqParams);
 
-    fetch(`http://localhost:8080/product${reqParams}`, { method: 'GET' }).then(res => res.json()).then(data => {
+    fetch(`http://localhost:8080/product${reqParams}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic ' + btoa(`${user.email}:${user.password}`)
+      }
+    }).then(res => res.json()).then(data => {
       const mapData = []
       console.log("AKAKA", data);
       data.content.map((item) => {
