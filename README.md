@@ -16,11 +16,11 @@
 Please run the frontend and backend application together.
 #### Frontend
 1. Go to fe-nextjs directory
-2. Run <b>npm install</b> in command line
-3. Run <b>npm run dev</b> in command line
-4. It'll give application port http://localhost:3000 and open it to any browser
+2. Run **`npm install`** in command line
+3. Run **`npm run dev`** in command line
+4. It'll give application port `http://localhost:3000` and open it to any browser
 #### Backend
 1. Go to be-spring-boot directory
 2. Turn on MySQL database server
-3. Run <b>mvn spring-boot:run</b> in command line
-4. It'll give application backend server port http://localhost:8080
+3. Run **`mvn spring-boot:run`** in command line
+4. It'll give application backend server port `http://localhost:8080`
