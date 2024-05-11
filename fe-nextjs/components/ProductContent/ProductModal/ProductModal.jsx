@@ -3,7 +3,6 @@ import { Button, InputBase } from '@mui/material'
 import React, { useState } from 'react'
 
 const ProductModal = ({ formType, product }) => {
-    console.log("ALALA", product);
     const [formData, setFormData] = useState({
         description: product.description ?? '',
         name: product.name ?? '',

@@ -8,7 +8,7 @@ export default function Login() {
 
   return (
     <div className='w-full h-full bg-zinc-200/90 flex justify-center items-center'>
-      <div className='w-[400px] h-[400px] bg-white rounded-[5px] py-4 px-6'>
+      <div className='w-[450px] h-fit bg-white rounded-[5px] py-8 px-[50px]'>
         {formType === 'login' ? <LoginForm setFormType={setFormType} /> : <RegisterForm setFormType={setFormType} />}
       </div>
     </div>

@@ -30,8 +30,6 @@ const ProductContent = ({ user }) => {
   };
 
   useEffect(() => {
-    console.log(`NOT BTOA: ${user.email}:${user.password}`);
-    console.log(`WITH BTOA: ${btoa(`${user.email}:${user.password}`)}`);
     fetch(`http://localhost:8080/category`, {
       method: 'GET',
       headers: {
@@ -61,7 +59,6 @@ const ProductContent = ({ user }) => {
       }
     }).then(res => res.json()).then(data => {
       const mapData = []
-      console.log("AKAKA", data);
       data.content.map((item) => {
         const row = {
           id: item.id,

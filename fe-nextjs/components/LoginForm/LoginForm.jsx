@@ -19,7 +19,6 @@ const LoginForm = ({ setFormType }) => {
   }
 
   const onSubmitForm = (e) => {
-    e.preventDefault();
     fetch('http://localhost:8080/auth/login', {
       method: 'POST',
       body: JSON.stringify(formData),

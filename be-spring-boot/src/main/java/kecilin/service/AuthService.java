@@ -17,22 +17,21 @@ public class AuthService implements UserDetailsService {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("AUTH SERVICE: " + email);
-        UserDetails user = userService.findByEmail(email);
+        UserDetails user = userService.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException(String.format("User with email '%s' not found", email)));
         return user;
     }
 
     public User register(UserRequestDto user) {
-        User userExists = userService.findByEmail(user.getEmail());
+        User userExists = userService.findByEmail(user.getEmail()).orElse(null);
+
         if (userExists != null) {
             throw new UsernameNotFoundException(String.format("User with email '%s' already exists", user.getEmail()));
         }
 
+        System.out.println("USUUS: " + user);
         return userService.createUser(user);
     }
 
@@ -41,10 +40,6 @@ public class AuthService implements UserDetailsService {
         if (!request.getPassword().equals(user.getPassword())) {
             throw new BadRequestException("Wrong Password, Please Try Again!");
         }
-        // if (!bCryptPasswordEncoder.matches(request.getPassword(),
-        // user.getPassword())) {
-        // throw new BadRequestException("Wrong Password, Please Try Again!");
-        // }
         return user;
     }
 }

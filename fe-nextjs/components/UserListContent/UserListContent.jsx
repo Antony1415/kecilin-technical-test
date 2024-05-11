@@ -69,13 +69,7 @@ const UserListContent = ({ user }) => {
 
   return (
     <div className='flex flex-col gap-5'>
-      <div className='flex gap-[100px]'>
-        <h1 className='font-bold text-[35px]'>User List</h1>
-
-        <div className='flex'>
-          <Button variant="contained" type='submit'>Create</Button>
-        </div>
-      </div>
+      <h1 className='font-bold text-[35px]'>User List</h1>
 
       <Table
         rows={rows}

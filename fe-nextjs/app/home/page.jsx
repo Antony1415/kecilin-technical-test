@@ -16,11 +16,8 @@ export default function Home() {
     };
 
     useEffect(() => {
-        console.log("ROLES", userContext);
-        console.log("WOI: ", userContext.role === 'USER' ? 'product' : 'user');
         setValue(userContext.role === 'USER' ? 'product' : 'user')
     }, [userContext])
-    console.log("VALUE", value);
 
     const homeContent = () => {
         if (userContext.role === 'USER') {

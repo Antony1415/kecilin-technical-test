@@ -1,6 +1,7 @@
 package kecilin.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,9 +17,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     public List<User> findAllUser() {
         return userRepository.findAll();
     }
@@ -27,10 +25,8 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new NullPointerException());
     }
 
-    public User findByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new UsernameNotFoundException(String.format("User with email '%s' not found", email)));
-        return user;
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public User createUser(UserRequestDto request) {
@@ -40,9 +36,7 @@ public class UserService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setRole(request.getRole());
-
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        user.setPassword(request.getPassword());
 
         return userRepository.save(user);
     }
