@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Table, UserListDeleteModal } from '@/components';
-import { Box, Button, Modal } from '@mui/material';
+import { Table, UserListDeleteModal, UserListUpdateModal } from '@/components';
+import { Box, Modal } from '@mui/material';
 
 const UserListContent = ({ user }) => {
   const [rows, setRows] = useState([])

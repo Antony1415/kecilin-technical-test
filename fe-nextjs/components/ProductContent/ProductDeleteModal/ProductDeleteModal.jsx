@@ -1,9 +1,14 @@
 import { Button } from '@mui/material'
 import React from 'react'
 
-const ProductDeleteModal = ({product}) => {
+const ProductDeleteModal = ({ user, product }) => {
     const onSubmitForm = (e) => {
-        fetch(`http://localhost:8080/product/${product.id}`, { method: 'DELETE' })
+        fetch(`http://localhost:8080/product/${product.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Basic ' + btoa(`${user.email}:${user.password}`)
+            }
+        })
     }
 
     return (

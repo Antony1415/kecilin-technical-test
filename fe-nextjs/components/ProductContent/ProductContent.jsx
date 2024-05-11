@@ -8,6 +8,7 @@ const ProductContent = ({ user }) => {
   const [open, setOpen] = useState(false);
   const [formType, setFormType] = useState('');
   const [selectedProduct, setSelectedProduct] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(3);
   const [sortBy, setSortBy] = useState('');
@@ -44,7 +45,6 @@ const ProductContent = ({ user }) => {
         setCategoryDropdown(mapData)
       })
   }, [])
-
   useEffect(() => {
     const reqParams = `?page=${pageNumber}` +
       `${pageSize && `&size=${pageSize}`}` +
@@ -72,6 +72,7 @@ const ProductContent = ({ user }) => {
         mapData.push(row)
       })
       setRows(mapData)
+      setTotalPages(data.totalPages)
     })
   }, [pageNumber, filterByCategory, searchByName, sortBy])
 
@@ -83,7 +84,6 @@ const ProductContent = ({ user }) => {
     { field: 'stock', headerName: 'Stock', width: 130 },
     { field: 'description', headerName: 'Description', width: 230 },
   ];
-
 
   const handleSearch = (e) => {
     setSearchByName(e.target.value)
@@ -149,7 +149,7 @@ const ProductContent = ({ user }) => {
         hideFooter={true}
       />
       <Pagination
-        count={(rows.length / pageSize) % pageSize === 0 ? (rows.length / pageSize) : Math.floor(rows.length / pageSize) + 1}
+        count={totalPages}
         color="primary"
         onChange={(event, value) => {
           setPageNumber(value - 1)
@@ -163,7 +163,7 @@ const ProductContent = ({ user }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {formType === 'delete' ? <ProductDeleteModal product={selectedProduct} /> : <ProductModal user={user} formType={formType} product={selectedProduct} />}
+          {formType === 'delete' ? <ProductDeleteModal user={user} product={selectedProduct} /> : <ProductModal user={user} formType={formType} product={selectedProduct} />}
         </Box>
       </Modal>
     </div>
