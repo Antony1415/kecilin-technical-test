@@ -3,7 +3,6 @@ import { Button, InputBase } from '@mui/material'
 import React, { useState } from 'react'
 
 const ProductModal = ({ user, formType, product }) => {
-    console.log("USER", typeof(user.id));
     const [formData, setFormData] = useState({
         description: product.description ?? '',
         name: product.name ?? '',
@@ -22,7 +21,6 @@ const ProductModal = ({ user, formType, product }) => {
     }
 
     const onSubmitForm = (e) => {
-        e.preventDefault();
         const mapFormData = {
             ...formData,
             stock: parseInt(formData.stock),
