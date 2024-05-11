@@ -2,12 +2,12 @@
 import { Button, InputBase } from '@mui/material'
 import React, { useState } from 'react'
 
-const UserListUpdateModal = ({ user }) => {
+const UserListUpdateModal = ({ user, selectedUser }) => {
   const [formData, setFormData] = useState({
-    first_name: user.firstName,
-    last_name: user.lastName,
-    age: user.age,
-    email: user.email,
+    first_name: selectedUser.firstName,
+    last_name: selectedUser.lastName,
+    age: selectedUser.age,
+    email: selectedUser.email,
   })
 
   const handleChangeForm = (e) => {
@@ -24,11 +24,12 @@ const UserListUpdateModal = ({ user }) => {
       age: parseInt(formData.age)
     }
 
-    fetch(`http://localhost:8080/user/${user.id}`, {
+    fetch(`http://localhost:8080/user/${selectedUser.id}`, {
       method: 'PUT',
       body: JSON.stringify(mapFormData),
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa(`${user.email}:${user.password}`)
       }
     })
   }

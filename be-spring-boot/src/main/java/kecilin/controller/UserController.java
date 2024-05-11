@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kecilin.dto.CategoryRequestDto;
 import kecilin.dto.UserRequestDto;
-import kecilin.model.Category;
 import kecilin.model.User;
 import kecilin.service.UserService;
 

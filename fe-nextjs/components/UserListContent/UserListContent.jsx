@@ -94,7 +94,7 @@ const UserListContent = ({ user }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {formType === 'edit' ? <UserListUpdateModal user={selectedUser} /> : <UserListDeleteModal user={selectedUser} />}
+          {formType === 'edit' ? <UserListUpdateModal user={user} selectedUser={selectedUser} /> : <UserListDeleteModal user={user} selectedUser={selectedUser} />}
         </Box>
       </Modal>
     </div>

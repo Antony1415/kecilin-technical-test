@@ -42,12 +42,13 @@ public class UserService {
     }
 
     public User updateUser(Long id, UserRequestDto request) {
+        System.out.println("TEST");
         User user = userRepository.findById(id).orElseThrow(() -> new NullPointerException());
         user.setAge(request.getAge());
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
-
+        System.out.println("USER: " + user);
         return userRepository.save(user);
     }
 
