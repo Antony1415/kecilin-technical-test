@@ -2,14 +2,15 @@
 import { Button, InputBase } from '@mui/material'
 import React, { useState } from 'react'
 
-const ProductModal = ({ formType, product }) => {
+const ProductModal = ({ user, formType, product }) => {
+    console.log("USER", typeof(user.id));
     const [formData, setFormData] = useState({
         description: product.description ?? '',
         name: product.name ?? '',
         price: product.price ?? '',
         stock: product.stock ?? '',
         category_id: product.category_id ?? '',
-        user_id: 1
+        user_id: user.id ?? 1,
     })
 
     const handleChangeForm = (e) => {
@@ -21,10 +22,11 @@ const ProductModal = ({ formType, product }) => {
     }
 
     const onSubmitForm = (e) => {
+        e.preventDefault();
         const mapFormData = {
             ...formData,
             stock: parseInt(formData.stock),
-            price: parseInt(formData.price)
+            price: parseInt(formData.price),
         }
 
         if (formType === 'create') {
@@ -33,6 +35,7 @@ const ProductModal = ({ formType, product }) => {
                 body: JSON.stringify(mapFormData),
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa(`${user.email}:${user.password}`)
                 }
             })
         } else {
@@ -41,6 +44,7 @@ const ProductModal = ({ formType, product }) => {
                 body: JSON.stringify(mapFormData),
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + btoa(`${user.email}:${user.password}`)
                 }
             })
         }

@@ -163,7 +163,7 @@ const ProductContent = ({ user }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {formType === 'delete' ? <ProductDeleteModal product={selectedProduct} /> : <ProductModal formType={formType} product={selectedProduct} />}
+          {formType === 'delete' ? <ProductDeleteModal product={selectedProduct} /> : <ProductModal user={user} formType={formType} product={selectedProduct} />}
         </Box>
       </Modal>
     </div>

@@ -29,6 +29,7 @@ const LoginForm = ({ setFormType }) => {
       .then(res => res.json())
       .then(data => {
         const userData = {
+          id: data.id,
           role: data.role,
           firstName: data.firstName,
           lastName: data.lastName,
